@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/revalidate?secret=${REVALIDATION_SECRET}",
+      "schedule": "0 * * * *"
+    }
+  ]
+}

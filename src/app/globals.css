@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #38A8F9;
+  --color-card-bg: #F8F9FA;
+  --color-text-primary: #222222;
+  --color-text-secondary: #888888;
+  --color-text-muted: #BBBBBB;
+  --color-pill-inactive: #F0F7FF;
+  --color-divider: #F0F0F0;
+
+  --font-damion: "Damion", cursive;
+  --font-inter: "Inter", sans-serif;
+
+  --radius-card: 8px;
+  --radius-pill: 16px;
+}
