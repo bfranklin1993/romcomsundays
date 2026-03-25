@@ -1,78 +1,74 @@
 "use client";
 
-interface FilterPillsProps {
+interface FilterBarProps {
   services: string[];
-  activeServices: string[];
+  activeService: string | null;
   activeRating: string | null;
-  activeYear: string | null;
-  years: string[];
-  onToggleService: (service: string) => void;
+  sort: string;
+  onSetService: (service: string | null) => void;
   onSetRating: (rating: string | null) => void;
-  onSetYear: (year: string | null) => void;
+  onSetSort: (sort: string) => void;
 }
 
-export function FilterPills({
+const SORT_LABELS: Record<string, string> = {
+  newest: "Newest First",
+  oldest: "Oldest First",
+  highest: "Highest Rated",
+  lowest: "Lowest Rated",
+  "a-z": "A → Z",
+  "z-a": "Z → A",
+};
+
+export function FilterBar({
   services,
-  activeServices,
+  activeService,
   activeRating,
-  activeYear,
-  years,
-  onToggleService,
+  sort,
+  onSetService,
   onSetRating,
-  onSetYear,
-}: FilterPillsProps) {
-  const noFilters = activeServices.length === 0 && !activeRating && !activeYear;
-
-  function pillClass(active: boolean) {
-    return `px-3 py-1.5 rounded-pill text-xs font-medium transition-colors ${
-      active
-        ? "bg-brand text-white"
-        : "bg-pill-inactive text-brand hover:bg-brand/10"
-    }`;
-  }
-
+  onSetSort,
+}: FilterBarProps) {
   return (
-    <div className="flex gap-2 flex-wrap">
-      <button
-        onClick={() => {
-          onToggleService("all");
-          onSetRating(null);
-          onSetYear(null);
-        }}
-        className={pillClass(noFilters)}
+    <div className="flex flex-wrap items-center gap-3">
+      {/* Streaming service */}
+      <select
+        value={activeService || ""}
+        onChange={(e) => onSetService(e.target.value || null)}
+        className="px-3 py-2 border border-divider rounded-lg text-sm bg-white outline-none focus:border-brand"
       >
-        All
-      </button>
+        <option value="">All Services</option>
+        {services.map((service) => (
+          <option key={service} value={service}>
+            {service}
+          </option>
+        ))}
+      </select>
 
-      {services.map((service) => (
-        <button
-          key={service}
-          onClick={() => onToggleService(service)}
-          className={pillClass(activeServices.includes(service))}
-        >
-          {service}
-        </button>
-      ))}
+      {/* Rating filter */}
+      <select
+        value={activeRating || ""}
+        onChange={(e) => onSetRating(e.target.value || null)}
+        className="px-3 py-2 border border-divider rounded-lg text-sm bg-white outline-none focus:border-brand"
+      >
+        <option value="">All Ratings</option>
+        <option value="9">9+</option>
+        <option value="8">8+</option>
+        <option value="7">7+</option>
+        <option value="6">6+</option>
+      </select>
 
-      {["9+", "8+", "7+"].map((rating) => (
-        <button
-          key={rating}
-          onClick={() => onSetRating(activeRating === rating ? null : rating)}
-          className={pillClass(activeRating === rating)}
-        >
-          {rating}
-        </button>
-      ))}
-
-      {years.map((year) => (
-        <button
-          key={year}
-          onClick={() => onSetYear(activeYear === year ? null : year)}
-          className={pillClass(activeYear === year)}
-        >
-          {year}
-        </button>
-      ))}
+      {/* Sort */}
+      <select
+        value={sort}
+        onChange={(e) => onSetSort(e.target.value)}
+        className="px-3 py-2 border border-divider rounded-lg text-sm bg-white outline-none focus:border-brand"
+      >
+        {Object.entries(SORT_LABELS).map(([value, label]) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

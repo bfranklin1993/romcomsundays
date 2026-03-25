@@ -1,5 +1,25 @@
 import type { MovieWithRatings } from "@/lib/types";
 
+const SERVICE_COLORS: Record<string, string> = {
+  "Netflix": "bg-[#E50914]",
+  "Hulu": "bg-[#1CE783]",
+  "HBO Max": "bg-[#B835FC]",
+  "Disney+": "bg-[#113CCF]",
+  "Prime Video": "bg-[#00A8E1]",
+  "Apple TV+": "bg-[#555555]",
+  "Peacock": "bg-[#F4B400]",
+  "Paramount+": "bg-[#0064FF]",
+  "Showtime": "bg-[#FF0000]",
+  "Tubi": "bg-[#FA382F]",
+  "FreeVee": "bg-[#39FF14] text-black",
+  "Freevee": "bg-[#39FF14] text-black",
+  "DVD": "bg-[#666666]",
+};
+
+function getServiceClass(service: string) {
+  return SERVICE_COLORS[service] || "bg-black/60";
+}
+
 interface MovieCardProps {
   movie: MovieWithRatings;
   onClick: () => void;
@@ -29,7 +49,7 @@ export function MovieCard({ movie, onClick }: MovieCardProps) {
             🎬
           </div>
         )}
-        <span className="absolute top-2 right-2 bg-black/60 text-white px-2 py-0.5 rounded text-[10px] font-semibold">
+        <span className={`absolute top-2 right-2 text-white px-2.5 py-1 rounded-md text-[11px] font-bold ${getServiceClass(movie.streamingService)}`}>
           {movie.streamingService}
         </span>
       </div>

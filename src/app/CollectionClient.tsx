@@ -9,7 +9,6 @@ export function CollectionClient({ movies: initialMovies }: { movies: MovieWithR
   const [movies, setMovies] = useState(initialMovies);
   const [selectedMovie, setSelectedMovie] = useState<MovieWithRatings | null>(null);
 
-  // Fetch user ratings for all movies on mount
   useEffect(() => {
     async function fetchRatings() {
       const updated = await Promise.all(
