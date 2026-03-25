@@ -34,7 +34,7 @@ export function CollectionClient({ movies: initialMovies }: { movies: MovieWithR
   }, [initialMovies]);
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-8">
+    <div className="max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
       <MovieGrid movies={movies} onMovieClick={setSelectedMovie} />
       {selectedMovie && (
         <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />

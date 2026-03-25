@@ -28,13 +28,15 @@ export function FilterBar({
   onSetRating,
   onSetSort,
 }: FilterBarProps) {
+  const selectClass = "px-3 py-2 border border-divider rounded-lg text-sm bg-white outline-none focus:border-brand w-full sm:w-auto";
+
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-2 sm:gap-3">
       {/* Streaming service */}
       <select
         value={activeService || ""}
         onChange={(e) => onSetService(e.target.value || null)}
-        className="px-3 py-2 border border-divider rounded-lg text-sm bg-white outline-none focus:border-brand"
+        className={selectClass}
       >
         <option value="">All Services</option>
         {services.map((service) => (
@@ -48,7 +50,7 @@ export function FilterBar({
       <select
         value={activeRating || ""}
         onChange={(e) => onSetRating(e.target.value || null)}
-        className="px-3 py-2 border border-divider rounded-lg text-sm bg-white outline-none focus:border-brand"
+        className={selectClass}
       >
         <option value="">All Ratings</option>
         <option value="9">9+</option>
@@ -61,7 +63,7 @@ export function FilterBar({
       <select
         value={sort}
         onChange={(e) => onSetSort(e.target.value)}
-        className="px-3 py-2 border border-divider rounded-lg text-sm bg-white outline-none focus:border-brand"
+        className={selectClass}
       >
         {Object.entries(SORT_LABELS).map(([value, label]) => (
           <option key={value} value={value}>

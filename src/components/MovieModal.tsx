@@ -28,6 +28,12 @@ export function MovieModal({ movie, onClose }: MovieModalProps) {
       .catch(() => {});
   }, [movie.id]);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
@@ -70,22 +76,27 @@ export function MovieModal({ movie, onClose }: MovieModalProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50 sm:p-4"
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-white sm:rounded-xl w-full sm:max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto rounded-t-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative w-full bg-gray-200 rounded-t-xl overflow-hidden">
+        {/* Mobile drag handle */}
+        <div className="sm:hidden flex justify-center pt-2 pb-1">
+          <div className="w-10 h-1 bg-gray-300 rounded-full" />
+        </div>
+
+        <div className="relative w-full bg-gray-200 sm:rounded-t-xl overflow-hidden">
           {movie.posterUrl ? (
             <img
               src={movie.posterUrl}
               alt={movie.title}
-              className="w-full max-h-[500px] object-contain bg-gray-100"
+              className="w-full max-h-[300px] sm:max-h-[500px] object-contain bg-gray-100"
             />
           ) : (
-            <div className="w-full h-48 flex items-center justify-center text-6xl">
+            <div className="w-full h-36 sm:h-48 flex items-center justify-center text-6xl">
               🎬
             </div>
           )}
@@ -97,8 +108,8 @@ export function MovieModal({ movie, onClose }: MovieModalProps) {
           </button>
         </div>
 
-        <div className="p-5">
-          <h2 className="text-xl font-bold mb-1">{movie.title}</h2>
+        <div className="p-4 sm:p-5">
+          <h2 className="text-lg sm:text-xl font-bold mb-1">{movie.title}</h2>
           <p className="text-sm text-text-secondary mb-4">
             {movie.year} · {movie.streamingService}
           </p>
@@ -106,7 +117,7 @@ export function MovieModal({ movie, onClose }: MovieModalProps) {
           <div className="flex gap-6 mb-5">
             <div>
               <p className="text-xs text-text-secondary mb-1">My Score</p>
-              <p className="text-3xl font-bold text-brand">
+              <p className="text-2xl sm:text-3xl font-bold text-brand">
                 {movie.score.toFixed(1)}
               </p>
             </div>
@@ -114,7 +125,7 @@ export function MovieModal({ movie, onClose }: MovieModalProps) {
               <p className="text-xs text-text-secondary mb-1">User Average</p>
               {ratingAvg !== null ? (
                 <>
-                  <p className="text-3xl font-bold text-text-primary">
+                  <p className="text-2xl sm:text-3xl font-bold text-text-primary">
                     {ratingAvg.toFixed(1)}
                   </p>
                   <p className="text-[10px] text-text-muted">
